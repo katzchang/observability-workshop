@@ -2,7 +2,7 @@
 
 ## 目的
 
-このコースでは、Splunk On-Call UI (旧VictorOps)、Splunk Infrastructure Monitoring UI (旧SignalFx)、およびお客様に割り当てられたEC2インスタンスへのアクセスを確認していきます。
+このモジュールでは、Splunk On-Call UI (旧VictorOps)、Splunk Infrastructure Monitoring UI (旧SignalFx)、およびお客様に割り当てられたEC2インスタンスへのアクセスを確認していきます。
 
 各プラットフォームへのアクセス権を取得したら、ワークショップの間、プラットフォームを切り替えて使用するため、ワークショップの指示に合わせて開いておいてください。
 
