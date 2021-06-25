@@ -79,13 +79,18 @@ plugins:
       type: date
   - minify:
       minify_html: false
+  - i18n:
+      default_language: en
+      languages:
+        en: English
+        ja: 日本語
 
 nav:
   - Home: index.md
   - Splunk IMT:
     - Workshop Introduction: otel/index.md
     - Initial Setup<br /><small>5 minutes</small>:
-      - Access AWS/EC2 instance: otel/connect-info.md 
+      - Access AWS/EC2 instance: otel/connect-info.md
     - Get Data In<br /><small>15 minutes</small>:
       - Deploy the OTel Collector: otel/k3s.md
       - Deploy and monitor NGINX : otel/nginx.md
@@ -132,13 +137,13 @@ nav:
   #  - Intro: lambda/index.md
   #  - Getting to know the Mobile Shop: lambda/initial_run_env.md
   #  - APM for Mobile Shop:
-  #    - Setting up Springboot App : lambda/springboot-apm.md 
+  #    - Setting up Springboot App : lambda/springboot-apm.md
   #    - Getting the first Trace: lambda/springboot-apm-II.md
   #  - APM for RetailOrder:
   #    - Basic Instrumentation: lambda/retail-order-I.md
   #  - APM for RetailOrderPrice:
   #    - Work in progress: lambda/wip.md
-  #  - APM for RetailOrderDiscount: 
+  #  - APM for RetailOrderDiscount:
   #    - Work in progress: lambda/wip.md
   #  - APM for RetailOrderLine:
   #    - Basic Instrumentation: lambda/retail-orderline-I.md
