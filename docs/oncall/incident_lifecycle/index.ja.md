@@ -1,72 +1,72 @@
-# UI Overview
+# UI概要
 
-## Aim
+# # 目的
 
-The aim of this module is for you to get more familiar with the Timeline Tab and the filtering features.
+このモジュールの目的は、「タイムライン」タブとフィルタリング機能をよりよく理解することです。
 
 ---
 
-## 1. Timeline
+## 1. タイムライン
 
-The aim of Splunk On-Call is to _**"Make On Call Suck Less"**_, and it does this by getting the critical data, to the right people, at the right time.
+Splunk On-Call の目的は _**"Make On Call Suck Less "**_ であり、重要なデータを適切な人に適切なタイミングで届けることで実現しています。
 
-The key to making it work for you is to centralize all your alerting sources, sending them all to the Splunk On-Call platform, then you have a single pane of glass in which to manage all of your alerting.
+これを機能させる鍵は、すべてのアラートソースを一元化し、それらをすべてSplunk On-Callプラットフォームに送信することで、すべてのアラートを管理する単一のガラス窓を持つことになります。
 
-Login to the Splunk On-Call UI and select the **Timeline** tab on the main menu bar, you should have a screen similar to the following image:
+Splunk On-Call UIにログインし、メインメニューバーの**Timeline**タブを選択すると、以下の画像のような画面が表示されます。
 
 ![Splunk On-Call UI](../../images/oncall/m7-vo-ui.png)
 
-## 2. People
+## 2. 人
 
-On the left we have the **People** section with the **Teams** and **Users** sub tabs.
+左側には、**People**セクションがあり、**Teams**と**Users**のサブタブがあります。
 
-On the **Teams** tab, click on **All Teams** then expand _**[Your Teamname]**_.
+Teams**タブでは、**All Teams**をクリックし、_**[Your Teamname]**_を展開します。
 
-Users with the Splunk On-Call Logo against their name are currently on call.
+自分の名前にSplunk On-Callロゴが付いているユーザーは、現在オンコール状態です。
 
-Here you can see who is on call within a particular Team, or across all Teams via **Users → On-Call**.
+ここでは、特定のチーム内で誰がオンコールになっているか、または **Users → On-Call** ですべてのチーム全体で誰がオンコールになっているかを確認できます。
 
-If you click into one of the currently on call users, you can see their status.
+現在オンコール中のユーザーをクリックすると、そのステータスを見ることができます。
 
-It shows which Rotation they are on call for, when their current Shift ends and their next Shift starts (times are displayed in your timezone), what contact methods they have and which Teams they belong to (dummy users such as Hank do not have Contact Methods configured).
+どのローテーションでオンコールになっているか、現在のシフトの終了日と次のシフトの開始日（時間はタイムゾーンで表示されます）、どの連絡方法を持っているか、どのチームに所属しているかが表示されます（Hankのようなダミーユーザーは連絡方法を設定していません）。
 
-![User Detail](../../images/oncall/m7-user-detail.png){: .center}
+![ユーザー詳細](../../images/oncall/m7-user-detail.png){: .center}.
 
-## 3. Timeline
+## 3. タイムライン
 
-In the centre **Timeline** section you get a realtime view of what is happening within your environment with the newest messages at the top.
+中央の**Timeline**セクションでは、最新のメッセージが上部に表示され、環境内で何が起こっているかをリアルタイムで見ることができます。
 
-Here you can quickly post update messages to make your colleagues aware of important developments etc.
+ここでは、重要な進展などを同僚に知らせるための更新メッセージを素早く投稿することができます。
 
-You can filter the view using the buttons on the top toolbar showing only update messages, GitHub integrations, or apply more advanced filters.
+上部ツールバーのボタンを使って表示をフィルタリングし、更新メッセージやGitHubインテグレーションだけを表示したり、より高度なフィルタを適用することができます。
 
-Lets change the Filters settings to streamline your view. Click the **Filters** button then within the **Routing Keys** tab change the **Show** setting from **all routing keys** to **selected routing keys**.
+それでは、フィルターの設定を変更して、表示を整理してみましょう。フィルター**ボタンをクリックし、**Routing Keys**タブで**Show**設定を**all routing keys**から**selected routing keys**に変更します。
 
-Change the **My Keys** value to **all** and the **Other Keys** value to **selected** and deselect all keys under the Other Keys section.
+My Keys**の値を**all**に、**Other Keys**の値を**selected**に変更し、Other Keysセクションですべてのキーの選択を解除します。
 
-Click anywhere outside of the dialogue box to close it.
+ダイアログボックスの外側をクリックしてダイアログボックスを閉じます。
 
-![Timeline Filters](../../images/oncall/m7-timeline-filters.png)
+![タイムラインフィルター](../../images/oncall/m7-timeline-filters.png)
 
-You will probably now have a much simpler view as you will not currently have Incidents created using your Routing Keys, so you are left with the other types of messages that the Timeline can display.
+現在、ルーティングキーを使用して作成されたインシデントはありませんので、タイムラインに表示できる他のタイプのメッセージが残っているため、よりシンプルな表示になっています。
 
-Click on **Filters** again, but this time switch to the **Message Types** tab.
+もう一度**Filters**をクリックして、今度は**Message Types**タブに切り替えてください。
 
-Here you control the types of messages that are displayed.
+ここでは、表示されるメッセージの種類をコントロールします。
 
-For example, deselect **On-call Changes** and **Escalations**, this will reduce the amount of messages displayed.
+例えば、**On-call Changes**と**Escalations**の選択を解除すると、表示されるメッセージの量が減ります。
 
-![Timeline Filters Message Types](../../images/oncall/m7-timeline-filters-message-types.png)
+![タイムラインフィルター メッセージタイプ](../../images/oncall/m7-timeline-filters-message-types.png)
 
-## 4. Incidents
+## 4. インシデント
 
-On the right we have the **Incidents** section.
+右側には「**インシデント**」セクションがあります。
 
-Here we get a list of all the incidents within the platform, or we can view a more specific list such as incidents you are specifically assigned to, or for any of the Teams you are a member of.
+ここには、プラットフォーム内のすべてのインシデントのリストが表示されます。また、自分が特に担当しているインシデントや、自分が所属しているチームのインシデントなど、より具体的なリストを表示することもできます。
 
-Select the **Team Incidents** tab you should find that the **Triggered**, **Acknowledged** & **Resolved** tabs are currently all empty as you have had no incidents logged.
+チームインシデント**タブを選択すると、**Triggered**、**Acknowledged**、**Resolved**タブは、インシデントが記録されていないため、現在すべて空になっていることがわかります。
 
-Let's change that by generating your first incident!
+最初のインシデントを作成して、この状況を変えましょう。
 
 ---
-Continue with the [Create Incidents](../incident_lifecycle/create_incidents/) module.
+インシデントの作成](../incident_lifecycle/create_incidents/)モジュールを続行します。
