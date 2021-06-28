@@ -37,14 +37,14 @@
 * Policy Name: Primary
 * Step 1
 * Immediately（直ちに）
-* Notify the on-duty user(s) in rotation（ローテーション担当に通知） → Follow The Sunサポート - 業務時間帯
+* Notify the on-duty user(s) in rotation（ローテーション担当に通知） → Follow the Sun Support - Business Hours
 * **Add Step** をクリック
 
 ![Pri Escalation Policy Step 1](../../images/oncall/pri-escalation-policy-step-1.png)
 
 * Step 2
 * If still unacked after 15 minutes（15分経ってもアクノレッジされない場合）
-* Notify the next user(s) in the current on-duty shift（ローテーションの次のユーザーに通知） → Follow The Sunサポート - 業務時間帯
+* Notify the next user(s) in the current on-duty shift（ローテーションの次のユーザーに通知） → Follow the Sun Support - Business Hours
 * **Add Step** をクリック
 
 ![Pri Escalation Policy Step 2](../../images/oncall/pri-escalation-policy-step-2.png)

@@ -14,13 +14,13 @@
 
 2つ目のローテーションは、経験豊富なシニアメンバーによるエスカレーションサポートを提供するためのもので、24時間365日、1週間のシフトパターンに基づいています。
 
-## 1. Follow The Sunサポート - 業務時間帯
+## 1. Follow the Sun Support - Business Hours
 
 **Add Rotation** をクリックしてください。
 
 ![Add Rotation](../../images/oncall/add-rotation.png){: .center}
 
-名前に「*Follow The Sunサポート - 業務時間帯*」と入力し、利用可能な3つのシフトテンプレートから **Partial day** を選択します。
+名前に「*Follow the Sun Support - Business Hours*」と入力し、利用可能な3つのシフトテンプレートから **Partial day** を選択します。
 
 ![Follow the Sun](../../images/oncall/follow-the-sun.png)
 
