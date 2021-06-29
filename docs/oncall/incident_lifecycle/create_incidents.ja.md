@@ -17,7 +17,7 @@
 * **Select a user to add...** のドロップダウンを使って、自分をシフトに追加します。
 * 次に、自分の名前の横にある　**Set Current**　をクリックして、自分をシフト内の現在の　**on-call**　ユーザーにします。
 * これで、あなたの携帯電話には、オンコールになった旨を知らせる **You Are Now On-Call** という **プッシュ通知** が届くはずです。
-![On Duty](../../images/oncall/on-duty.png){: .center}。
+![On Duty](../../images/oncall/on-duty.png){: .center}
 
 ## 2. アラートを発生させる
 
