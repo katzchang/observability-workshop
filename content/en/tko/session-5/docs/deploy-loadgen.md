@@ -6,12 +6,12 @@ weight: 5
 
 Now to see how the autoscaler reacts to increased load. To do this, you'll start a different Pod to act as a client. The container within the client Pod runs in an infinite loop, sending queries to the php-apache Service.
 
-## 1. Create loadgen YAML
+## 1. Review loadgen YAML
 
-In the terminal window create a new file called `loadgen.yaml` and copy the following YAML into the file:
+Inspect the YAML file `~/workshop/k3s/loadgen.yaml` and validate the contents. This file contains the configuration for the load generator and will create a new StatefulSet with a single replica of the load generator image.
 
 {{< tabpane >}}
-{{< tab header="loadgen.yaml" lang="yaml" >}}
+{{< tab header="~/workshop/k3s/loadgen.yaml" lang="yaml" >}}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -46,10 +46,10 @@ spec:
 kubectl create namespace loadgen
 ```
 
-## 3. Deploy the load generator
+## 3. Deploy the loadgen YAML
 
 ``` text
-kubectl apply -f loadgen.yaml --namespace loadgen
+kubectl apply -f ~/workshop/k3s/loadgen.yaml --namespace loadgen
 ```
 
 Once you have deployed the load generator, you can see the Pod running in the `loadgen` namespace. Use previous similar commands to check the status of the Pod from the command line.
@@ -75,7 +75,7 @@ kubectl get statefulset loadgen -n loadgen
 ```
 
 {{% alert title="Workshop Question" color="success" %}}
-What has happened to the Memory metric for the `php-apache-0` Pod?
+What impact did this have? Where in O11y can you see the increased replica number? Can you identify the point when you scaled?
 {{% /alert %}}
 
 Let the load generator run for around 2-3 minutes and keep observing the metrics in the Kubernetes Navigator and the Apache dashboard.
