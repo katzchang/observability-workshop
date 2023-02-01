@@ -69,6 +69,8 @@ helm install splunk-otel-collector \
 --set="splunkObservability.logsEnabled=true" \
 --set="splunkObservability.profilingEnabled=true" \
 --set="splunkObservability.infrastructureMonitoringEventsEnabled=true" \
+--set="networkExplorer.enabled=true" \
+--set="networkExplorer.podSecurityPolicy.enabled=false" \
 --set="environment=$(hostname)-apm-env" \
 splunk-otel-collector-chart/splunk-otel-collector \
 -f ~/workshop/k3s/otel-collector.yaml
