@@ -1,7 +1,7 @@
 ---
 title: Code to Kubernetes - Python
 linkTitle: Code to Kubernetes
-weight: 4
+weight: 5
 ---
 
 ## Code to Kubernetes - Python
@@ -16,7 +16,7 @@ weight: 4
 
 **Duration:** 15 Minutes
 
-## Verify the code - Review service
+## 1. Verify the code - Review service
 
 Inspect review.py (workshop/flask_apps_start/review)
 
@@ -55,7 +55,7 @@ Flask==2.0.2
 Create a virtual environment and Install the necessary python packages
 
 ``` bash
-cd Workshop/flask_apps_start/review
+cd workshop/flask_apps_start/review
 
 python3 -m venv rtapp-workshop
 source rtapp-workshop/bin/activate
@@ -81,8 +81,9 @@ python3 review.py
 ```
 
 Verify that the service is working
-- Hit the URL http://localhost:5000 and http://localhost:5000/get_review with a browser
-- Or, use curl in your terminal
+
+- Use curl in your terminal
+- Or hit the URL `http://{Your_EC2_IP_address}:5000` and `http://{Your_EC2_IP_address}:5000/get_review` with a browser
 
 ``` bash
 curl localhost:5000
@@ -103,22 +104,22 @@ curl localhost:5000/get_review
 
 {{% /alert %}}}
 
-## Create a REVIEW container
+## 2. Create a REVIEW container
 
 To create a container image, you need to create a Dockerfile, run docker build to build the image referencing the Docker file and push it up to a remote repository so it can be pulled by other sources.
 
-- Create a Dockerfile
+- [Create a Dockerfile](https://docs.docker.com/get-started/02_our_app/)
 - Creating a Dockerfile typically requires you to consider the following:
   - Identify an appropriate container image
     - ubuntu vs. python vs. alpine/slim
     - ubuntu - overkill, large image size, wasted resources when running in K8
     - this is a python app, so pick an image that is optimized for it
-    - avoid alpine for python
+    - [avoid alpine for python](https://lih-verma.medium.com/alpine-makes-python-docker-builds-way-too-50-slower-and-images-double-2-larger-61d1d43cbc79)
   - Order matters
     - you're building layers.
     - re-use the layers as much as possible
     - have items that change often towards the end
-  - Other Best practices for writing Dockerfiles
+  - [Other Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
 Dockerfile for review
 
@@ -168,10 +169,11 @@ curl -s http://localhost:8000/v2/_catalog
 {"repositories":["review"]}
 ```
 
-## Run REVIEW in Kubernetes
+## 3. Run REVIEW in Kubernetes
 
 Create K8 deployment yaml file for the REVIEW app
-Reference: Creating a Deployment
+
+Reference: [Creating a Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment)
 
 review.deployment.yaml
 
@@ -216,7 +218,9 @@ Notes regarding review.deployment.yaml:
 - regcred provides this deployment with the ability to access your dockerhub credentials which is necessary to pull the container image.
 - The volume definition and volumemount make the yelp dataset visible to the container
 
-Create a K8 service yaml file for the review app. Reference: Creating a service:
+Create a K8 service yaml file for the review app. 
+
+Reference: [Creating a service:](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)
 
 review.service.yaml
 
@@ -240,10 +244,10 @@ Notes about review.service.yaml:
 - the selector associates this service to pods with the label app with the value being review
 - the review service exposes the review pods as a network service
   - other pods can now ping 'review' and they will hit a review pod.
-  - a pod would get a review if it ran 'curl http://review:5000'
+  - a pod would get a review if it ran `curl http://review:5000`
 - NodePort service
   - the service is accessible to the K8 host by the nodePort, 30000
-  - Another machine that has this can get a review if it ran 'curl http://<k8 host ip>:30000'
+  - Another machine that has this can get a review if it ran `curl http://<k8 host ip>:30000`
 
 Apply the review deployment and service
 
@@ -273,11 +277,3 @@ ubuntu@ip-10-0-1-54:/tmp$ curl localhost:30000/get_review
 {{% alert title="Workshop Question" color="success" %}}
 What changes are required if you need to make an update to your Dockerfile now?
 {{% /alert %}}
-
-## END OF TKO LAB
-
-We hope you found this session and lab useful. We have optional exercise you can do if you finish ahead of schedule, or if you would like to run this at home. Remember this resource can be used at customers to show the value / ease of OTEL.
-
-Please be sure to review our session and provide feedback so we may improve your experience.
-
-Happy Splunking!!

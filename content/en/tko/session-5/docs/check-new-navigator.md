@@ -1,151 +1,202 @@
 ---
-title: The new Kubernetes Navigator
-linkTitle: Touring the Kubernetes Navigator v2
-weight: 22
----
-## 1. The k8s cluster & cluster detail Pane
+title: The New Kubernetes Navigator
+linkTitle: 2. Kubernetes Navigator v2
+weight: 2
+--- 
+## 1. Cluster vs Workload View
 
-Go to the **Infrastructure** page in the Observability UI and select **Kubernetes**, this will offer you a number of Kubernetes services. For this exercise pick the `K8s cluster` pane.
+The Kubernetes Navigator offers you two separate use cases to view your Kubernetes data.
 
-![k8s-cluster-pane](../images/k8sclusters.png)
+* The `K8s nodes` or Admin view is focusing on providing insight into the performance of clusters, Nodes, Pods & Containers.
+* The `K8s workloads` or Developer view is focusing on  providing information in regards to workloads a.k.a. *your deployments*.
 
-The first thing you notice is that the pane indicates how many clusters are being monitored for you. The pane also shows a tiny graph of the load being handled across those clusters for a birds eye view.  Lastly, if there is a alert for one of the clusters it will be highlighted here too.
-
-Click or select on the pane  and you will be taken to the `Infrastructure/Kubernetes/ K8s clusters` overview pane. Here you will find a list off all the Kubernetes clusters that are sending data to the Splunk Observability Cloud platform.
+You initially select either view depending on your need. (You can switch between the view on the fly if required)
 
 ### 1.1 Finding your K8s cluster name
 
 Your first task is to identify and find your own cluster. The cluster will be named after your EC2 instance name: `ws-5-X-k3s-cluster` where `X` is the number of the EC2 instance assigned to you.
 
-To find your node name look at the prompt of your EC2 instance, assuming you are assigned the 7th EC2 instance the prompt will show
+To find your node name, look at the prompt of your EC2 instance. For example, if you are assigned the 7th EC2 instance, the prompt will show: `ubuntu@ws-5-7 ~ $`
 
-``` bash
-ubuntu@ws-5-7 ~ $
-```
+This means your cluster is named: `ws-5-7-k3s-cluster`. Please make a note of your cluster name as you will need this later in the workshop for filtering.
 
-This means your cluster is named: `ws-5-7-k3s-cluster`  make a note as you will need this later in the workshop as a filter.
+## 2 The K8s nodes & cluster Pane
 
-{{% alert title="Workshop Question" color="success" %}}
-Find your Cluster in the Observability Kubernetes Navigator, and identify the number of containers that are running at this point.
+Go to the **Infrastructure** page in the Observability UI and select **Kubernetes**, this will offer you a set of Kubernetes services.
 
-**Tip:** You may need to switch  the Color By option to containers and refresh the screen a few times until the cluster data is correlated in the background. Also, it is recommended to set the timeframe to be `15m` (down from `3h` which is default).
+![k8s-cluster-pane](../images/k8s-nodes.png)
+
+The first thing you notice is that the pane indicates how many kubernetes nodes are being monitored for you. The pane also shows a tiny graph giving you a bird's eye view of the load being handled across those Nodes. Also, if there are any alerts for one of the nodes, you will see a small alert indicator as shown in the image above.
+
+Click on the K8s Nodes pane and you will be taken to the `Infrastructure/Kubernetes/K8s nodes` overview pane. Here you will find a map representation of all the Kubernetes Clusters that are sending data to the Splunk Observability Cloud platform.
+
+### 2.1 The K8s Cluster Map
+
+Initially, the cluster detail map will show you all the clusters reporting into your Observability Cloud Org. If an alert has fired for any of the clusters, it will be highlighted on the top right, *as marked with a red stripe in the image below*. You can go directly to the alert by clicking on it to expand it.
+
+Beneath the filters, you will find the Breadcrumbs feature, *as marked with a yellow arrow in the image below*. When you drill down deeper into your cluster, the breadcrumbs will show drop downs for all levels and you can use it to navigate up and down the cluster tree. (More on this later!)
+
+![k8s-cluster-map](../images/nodeswithclusters.png)
+
+In a production environment, you can expect to see different sizes of Clusters with different number of nodes. Each node in a cluster will be shown as an individual pale blue square. When you drill down into a node, you will see green squares which represent pods as seen in the image below:
+
+![k8s-cluster-map](../images/cluster-node.png)
+
+In our workshop environment, however, you each have a single node within your cluster, represented by a large, single, blue square.
+
+Let's find your own Cluster using the filter feature. First, let's switch the time filter in the upper-left corner from the default of 3 hours to the past 15 minutes. Then, click the *Add Filters* button, *Marked with a blue line*, and begin typing `k8s.cluster.name` in the filter toolbar (the type-ahead feature will help you!) For the cluster name, you can enter a partial name into the search box, such as `ws-5-7*`, to quickly find your cluster.
+
+As soon as you find your cluster and it's highlighted, the charts below it show information on all the nodes in your cluster.
+
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
+How much memory does our node have?
 {{% /alert %}}
 
-### 1.2 Using the K8s Selection Pane
+You can switch to the Cluster View by selecting the **K8s cluster** tab just beneath the map view. Here you will see charts with details of your cluster(s).
 
-The K8s Selection Pane is a common pane used across most of the Navigator's and will offer you a list view of the  Services you are looking at. In this case it shows a list of all the active K8s Clusters.
+### 2.3. The Nodes & Cluster views
 
-You will find that this pane is used in all the navigators used in this workshop (Cluster's, Nodes, Workloads & Apache Servers). The way the selection pane works is similar across teh navigators. Just the focus and selection criteria will match the chosen service.
+Now, drill down into your single Node by hovering over the pale blue background, then clicking on either the magnifying glass that appears in the top left corner, or double clicking on the pale blue background. This will take you to the Node level view. Note that the breadcrumb has grown one level.
 
-![k8s-cluster-list](../images/navi-selection-pane.png)
-
-First, Select the `Memory usage (bytes)` from the **Color by** drop down box *Marked with a green line*, as shown in the example above.
-
-Now,you can find your own Cluster by scrolling down the K8s cluster list or filter by using the field `k8s.cluster.name` in the filter toolbar, *(marked with a blue stripe)*.
-
-You can enter a partial name into the search box such as 'ws-5-7', to find quickly find your Cluster. Also, its is a good idea to switch the default time from  the default 3 hours back to 15 minutes.
-
-If there are many clusters, you can change the Result per page box *Marked by an orange line*,  to increase the list size.
-
-You will note that each cluster row has a colored mark at the end of each row. These will change according the `color by` option, *Marked by a green line*, you have selected as to indicate its range.
-
-These are the possible options for the k8s Cluster view:
-
-![k8s-colorby-list](../images/Infk8sColorBy.png)
-
-Next, you can change the the list view to a heat map view by selecting either the Heat map or List icon ![heat-map-toggle](../images/heatmaptoggle.png) *(Marked by a purple line).*
-
-This will result in the follow representation:
-
-![k8s-Heat-map](../images/heatmapview.png)
-
-This might be a useful view if you have many cluster as they can be grouped together using the group by option *Marked by the green line* . The colors of each node will follow the color by  choice similar to the list view.
-
-The last option, is the Find Outliers based on historical analytics of your clusters based on what is selected in the `colored by` box.  
-
-This view is better used when you view all or a selection of you cluster (ar any other navigator view). It will give you a quick insight which of your clusters are behaving differently than  they do normally and may need further investigation.
-You may not see relevant info, the clusters in this workshop are short lived and may haven't send enough meaningful data for the historical analytics to detect deviations.
-
-### 1.3 The K8s cluster detail Pane
-
-Initially,the cluster detail pane will show you the overall performance across all the servers as show below.
-
-![k8s-allclusters](../images/k8s-allclusters.png)
-
-As soon as you select your own cluster, you can see the overall performance of your Cluster, in this view you also can see if your cluster is affected by an alert:
-
-![k8s-cluster-alert](../images/single-cluster-alert.png)
-
-You may note that a `single alert` has fired for this example Cluster.
-
-## 3. The Nodes & Workloads Panes
-
-Go to the **Infrastructure** page in the Observability UI and select **Kubernetes**, this again will offer you a number of Kubernetes services. For this exercise pick the `K8s Nodes` pane. When selected it may show a cluster that you have selected previously.
-
-![k8sNode](../images/k8sNodes.png)
-
-{{% alert title="Note" color="info" %}}
-When selected it may show a cluster that you have selected previously using the old UI. 
-
-Check to see if there is a ![new-k8-button](../images/new-k8s-button.png) button on the top right... Press it to switch to the new UI.
-{{% /alert %}}
-
-In a production environment you would expect to see a large number of Clusters which would now all be visible and shown as individual pale blue squares, each containing green squares which represent pods, however in our workshop environment you each have a single node within your Cluster, represented by the large single blue square.
-
-Drill down into the single Node by hovering over the pale blue background, then clicking on either the magnifying glass that appears in the top left corner, or double clicking on the pale blue background, this will take you to the Node level view.
-
-You should now be able to see all the Pods and Containers running on your single Node Cluster...
+You should now be able to see all the Pods and Containers running on your single Node Cluster.
 
 ![cluster-detail](../images/cluster-detail.png)
 
-But, more importantly, the *side panel* should have also switched to the Info Tab and is now showing lots of contextual information about the Node.
+As soon as you select your node in your cluster, you can see the overall performance of that node in the charts beneath the selected node.
 
-![side-panel-node.png](../images/side-panel-node.png)
-
-There are various Panes showing details on the Properties of the Node, and all the various Workloads running on it, even though we are still on the 'Map' tab within Kubernetes Navigator.
-
-At the top of the side panel, click on the Expand icon ![expand-sidebar.png](../images/expand-sidebar.png) which takes you to the full screen tab of the currently displayed resource, which in this case is a Node, so we end up on the Node Details Tab.
-
-Node Details shows you lots of great detail about what is happening on this Node, with charts for total CPU Usage, Memory Usage, Network traffic etc for all the Pods running on the Node with a list of any Events just to the right of these Charts.
-
-You also have scrollable table views of both the Workloads and Containers running on the Node.  Clicking on any of the names in the tables will reopen the side panel with the appropriate panes for either Workloads or Containers.  Each of these can then also be expanded just like you did with the Node side panel, by clicking the expand button ![expand-sidebar.png](../images/expand-sidebar.png)
-
-{{% alert title="Workshop Question" color="success" %}}
-How much memory and how many CPU cores does our one node have?
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
+How many pods are running on your node at this point?
 {{% /alert %}}
 
-## 3. Workloads & Workload Details Tabs
+### 2.4. Using the Breadcrumbs
 
-Assuming you have been able to answer the question about the Node CPU cores, you will now need to switch to the Workloads tab on the top toolbar.  The Workloads tab details all the workloads that are deployed within your cluster.
+As you selected your Node, you may notice that the `Breadcrumbs` above the Map view is changing and showing more options.
 
-This table provides lots of valuable insights into the state of your workloads, and will show you if any of them are not in their desired state.
+With the node selected, hunt in your node map for the *splunk-otel-collector-agent* pod, and once found, select the *otel-collector* container from that pod.
 
-The default view has no Grouping applied but experiment with the various Group By options to see how the table changes.  Note how you can also use the various fields in the top toolbar to filter the data displayed, this would be essential in a large environment with hundreds or even thousands of different Workloads.
+Your Breadcrumbs above your Map view should look somewhat like this:
 
-{{% alert title="Workshop Question" color="success" %}}
-What type is the `splunk-otel-collector-agent` workload, and what is its desired configuration?
+![Breadcrumbs](../images/crumbtrail.png)
+
+Note, you can walk back-up in the stack by clicking on the Pod, Node, Cluster and Service links *marked with a green line*.
+
+{{% alert title="Note" style="info" %}}
+Most dashboards you select, via in the `Breadcrumbs` or direct,  provide `Related Content`.
+Check if they appear at the bottom of the page when switching between levels in the breadcrumbs.
+
+**Tip:** You may need to refresh the screen a few time to refresh the log search data in the background.
 {{% /alert %}}
 
-To get more detail on a specific Workload, simply click on its name in the Workload column (we assume you have the 'splunk-otel-collector-agent' workload selected), this will open the side panel, then click the expand button ![expand-sidebar.png](../images/expand-sidebar.png) to navigate to the Workload Detail Tab.
+## 3. Workloads & Workload Details Pane
 
----
+You can switch to the `K8s Workloads` view in two ways:
 
-### 3.1 Workload Detail tab
+* Change the value in the **Service** drop down box in the breadcrumbs from *K8s nodes* to *K8s workloads*
+![k8sToggle](../images/service-toggle.png)
 
-Here you will get the general info about your Workload, the CPU and Memory the Containers are consuming, the Pods and their Phase, details of any Events, and finally a list of Pods related to this Workload.
+  **OR**
 
-As with the other Kubernetes Navigator views clicking on the name of a Pod within the table view will load the Side Panel with details about that resource, allowing you to 'click through' to these resources.  Select any of the listed Pods, then click the expand button ![expand-sidebar.png](../images/expand-sidebar.png) to navigate to the Pod Detail Tab.
+* Go to the **Infrastructure** menu item in the Observability UI and select **Kubernetes** again, then pick the `K8s workloads` pane
+![k8sWorkloads](../images/K8s-Workloads.png)
 
-{{% alert title="Workshop Question" color="success" %}}
-How many containers does the `splunk-otel-collector-agent` Pod contain?
+Initially, the workload view will show you all the workloads that are reported by your clusters into your Observability Cloud Org. If an alert has fired for any of the workloads, it will be highlighted on the top right, *as marked with a red stripe in the image below*. You can go directly to the alert by clicking it to expand it.
+
+We can also use the Breadcrumbs feature that we have learned about earlier. As a reminder, you will see the Breadcrumbs toward the top of the screen, *as marked with a yellow arrow in the image below*. When you drill down deeper into your workload, it will show drop downs for all levels and you can use it to navigate up and down the workload tree.
+
+![Workloads](../images/k8s-workload-screen.png)
+
+Now, let's find your own cluster by filtering on the field `k8s.cluster.name` in the filter toolbar, *as marked with a blue stripe in the image below*. Note: you can enter a partial name into the search box, such as 'ws-5-7*', to quickly find your Cluster. Remember, it's is a good idea to switch the default time from the default 3 hours back to 15 minutes.
+
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
+How many workloads are running on your Cluster?
 {{% /alert %}}
 
-## 4. Pod Detail & Container Details Tabs
+### 3.1 Using the Navigator Selection chart
 
-The last two Tabs that make up the Kubernetes Navigator are Pod Detail and Container Detail. The Pod Detail view will show you the Pod Properties, CPU, Memory and Network usage along with any events relevant to the Pod.
+The K8s.Namespace.Name Table is a common feature used across most of the Navigator's and will offer you a list view of the data you are viewing. In our case, it shows a list of `Pods Failed` grouped by `k8s.namespace.name`. You will find this pane used in various navigators in this workshop (ex: Workloads & Apache Servers). The way the selection pane works is similar across the navigators in that in that the information shown will match the selection criteria in your filters..
 
-Clicking through to the Container Detail Tab, you should know how to do this by now, but just to play safe, select one of the Containers in the list then click the expand button ![expand-sidebar.png](../images/expand-sidebar.png) to navigate to the Container Detail Tab.  
+![k8s-workload-list](../images/workload-selection.png)
 
-If you navigated straight to the Container Detail Tab by simply clicking on the Tab, try using the Container ID drop down to select a container, now you will see the benefit of 'clicking through' to get to the desired Container!
+First, let's select the `File system usage (bytes)` from the **Color by** drop down box, *as marked with a green line in the image above*. Now,expand the Splunk Workload by clicking on the black triangle to the left of `Splunk` (*as marked by a black arrow in the image above*).
 
-You can now see the details for the Selected Container, with the Container Properties pane offering lots of detail on its configuration.
+Once you expand a workload, you will note that each workload row has a colored rectangle at the end of it row. These bars change color according to the `color by` option you selected, *as marked by a green line in the image above*. These bars use colors to give a visual indication of health and/or usage.
+
+If there are many workloads, you can change the `Result per page box` *as marked by an orange line in the image above*, to increase the list size. (It will also offer pagination if required).
+
+Next, you can change the list view to a heat map view by selecting either the Heat map icon or List icon in the upper-right corner of the screen: [heat-map-toggle](../images/heatmaptoggle.png) *(as marked with a purple line in the above image).*
+
+Changing this option will result in the following representation:
+
+![k8s-Heat-map](../images/heatmap.png)
+
+This might be a useful view if you have many clusters as they can be grouped together using the `Group by` option *as marked by the green line in the above image*. The colors of each node will follow the `Color by` choice similar to the list view.
+
+The last option, is `Find Outliers` which provides historical analytics of your clusters based on what is selected in the `Color by` box.
+
+Now, click on the `Find outliers` drop down *as marked by a yellow stripe in the above image* and make sure you change the Strategy in the dialog  to `Deviation from Median` as below:
+
+![k8s-Heat-map](../images/set-find-outliers.png)
+
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
+What happened to the Heatmap?
+{{% /alert %}}
+
+The `Find outliers` view is very useful when you need to view all or a selection of your workloads (or any service depending on the navigator used) and need to figure out if something has changed. It will give you a quick insight in items (workloads in our case) that are performing differently (both increase or decreased) which helps to make it easier to spot problems.
+
+### 3.2 The Workload Overview pane
+
+The workload overview gives you a quick insight of the status of your deployment. You can see at once if the pods of your deployments are Pending, Running, Failed, Succeeded or in an unknown state.  
+
+![k8s-workload-overview](../images/k8s-workload-overview.png)
+
+* *Running* Means your pods are deployed and in a running state
+* *Pending* means waiting to be deployed
+* *Succeeded* means the pod has been deployed and completed its job and is finished
+* *Failed* means the containers in the pod have run and returned some kind of error
+* *Unknown* means Kubernetes isn't reporting any of the known states. (This may be during start or stopping pods, for example).
+
+You can expand the Workload name by hoovering you mouse on it, in case the name is longer then the chart allows.
+
+![k8s-workload-hoover](../images/k8s-workload-hoover.png)
+
+To filter to a specific Workload, you can click on three dots `...` next to the workload name in the *k8s.workload.name* column and choose `filter` from the drop down box.
+
+![workload-add-filter](../images/workload-add-filter.png)
+
+This will add the selected workload to your filters.
+
+### 3.3 Replicaset overview
+
+The last chart will give you a bird's eye view on how many pods are deployed by Kubernetes for your deployment. In a replicaset, you can indicate the min, max and desired number of pods you wish to run as part the deployment.
+
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
+What is the desired number of pods for the `splunk-otel-collector-k8s-cluster-reciever` replicaset?
+{{% /alert %}}
+
+### 3.4. Drilling down into your Workload
+
+To bring up details of a workload in the Kubernetes Navigator, you either need to expand a namespace in the list mode or click on a workload square in the heatmap view.
+
+First, remove the filter you set in the previous step, by clicking on the `x` behind the filter at the top of the page.
+Then, in the heatmap mode, double click on the square for the `splunk-otel-collector-agent` workload in the *splunk* namespace.
+
+![workload-expand](../images/workload-expand.png)
+
+In the list view, you can click on the link that appears when expanding a namespace.
+
+This will bring you to the `Workload detail` page where you get more details about the health and performance of your workload & pods.
+
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
+What are the names of the container(s) in the **CPU resources (cpu units)** chart for the `splunk-otel-collector-agent`?
+{{% /alert %}}
+
+## 4. Pivot Sidebar
+
+Later in the workshop, you will deploy an Apache server into your cluster which will cause a `pivot bar` to appear.
+As soon as any metric that is used by a Navigator, is flowing into your Observability org, the system will add that service to the pivot bar.
+
+The pivot bar will expand and a link to the discovered service will be added as seen in the image below:
+
+![pivotbar](../images/pivotbar.png)
+
+This will allow for easy switching between navigators. The same applies for your Apache server instance -- it will have a pivot bar allowing you to quickly jump back to the Kubernetes navigator.

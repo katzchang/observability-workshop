@@ -3,7 +3,7 @@ title: Real User Monitoring
 weight: 4
 ---
 
-## Splunk Real User Monitoring
+## 1. Enable RUM
 
 For the Real User Monitoring (RUM) instrumentation, we will add the Open Telemetry Javascript [https://github.com/signalfx/splunk-otel-js-web](https://github.com/signalfx/splunk-otel-js-web) snippet in the pages, we will use the wizard again **Data Management → Add Integration → RUM Instrumentation → Browser Instrumentation**.
 
@@ -19,16 +19,16 @@ Then you'll need to select the workshop RUM token and define the application and
 
 Copy the generated code snippet in the wizard or copy and edit the snippet below accordingly:
 
-```html
-    <script src="https://cdn.signalfx.com/o11y-gdi-rum/latest/splunk-otel-web.js" crossorigin="anonymous"></script>
-    <script>
-    SplunkRum.init({
-        beaconUrl: "https://rum-ingest.<REALM>.signalfx.com/v1/rum",
-        rumAuth: "<RUM_ACCESS_TOKEN>",
-        app: "<hostname>-petclinic-service",
-        environment: "<hostname>-petclinic-env"
-        });
-    </script>
+``` html
+<script src="https://cdn.signalfx.com/o11y-gdi-rum/latest/splunk-otel-web.js" crossorigin="anonymous"></script>
+<script>
+SplunkRum.init({
+    beaconUrl: "https://rum-ingest.<REALM>.signalfx.com/v1/rum",
+    rumAuth: "<RUM_ACCESS_TOKEN>",
+    app: "<hostname>-petclinic-service",
+    environment: "<hostname>-petclinic-env"
+    });
+</script>
 ```
 
 The Spring PetClinic application uses a single HTML page as the "layout" page, that is reused across all pages of the application. This is the perfect location to insert the Splunk RUM Instrumentation Library as it will be loaded in all pages automatically.
@@ -41,7 +41,7 @@ vi src/main/resources/templates/fragments/layout.html
 
 and let's insert the snipped we generated above in the `<head>` section of the page. Now we need to rebuild the application and run it again:
 
-## Rebuild PetClinic
+## 2. Rebuild PetClinic
 
 run the maven command to compile/build/package PetClinic:
 

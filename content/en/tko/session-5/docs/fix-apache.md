@@ -1,11 +1,11 @@
 ---
 title: Fix PHP/Apache Issue
-linkTitle: Fix PHP/Apache Issue
+linkTitle: 4. Fix PHP/Apache Issue
 weight: 4
 ---
 ## 1. Kubernetes Resources
 
-Especially in Production Kubernetes Clusters, CPU and Memory are considered precious resources. And  the Cluster operators will normally require you to specify in the deployment the amount of CPU and Memory your Pod or Service will require, so they can have the Cluster automatically manage on which Node(s) your solution will be placed.
+Especially in Production Kubernetes Clusters, CPU and Memory are considered precious resources.  Cluster Operators will normally require you to specify the amount of CPU and Memory your Pod or Service will require in the deployment, so they can have the Cluster automatically manage on which Node(s) your solution will be placed.
 
 You do this by placing a Resource section in the deployment of you application/Pod
 
@@ -31,13 +31,17 @@ If that fails, or if there is not enough space when you deploy your application,
 
 ## 2. Fix PHP/Apache Deployment
 
-{{% alert title="Workshop Question" color="success" %}}
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
 
 Before we start, let's check the current status of the PHP/Apache deployment. Under **Alerts & Detectors** which detector has fired? Where else can you find this information?
 
 {{% /alert %}}
 
-To fix the PHP/Apache StatefulSet, edit `~/workshop/k3s/php-apache.yaml` and reduce the CPU resources further:
+To fix the PHP/Apache StatefulSet, edit `~/workshop/k3s/php-apache.yaml` using the following commands to reduce the CPU resources:
+
+``` bash
+vim ~/workshop/k3s/php-apache.yaml
+```
 
 Find the resources section and reduce the CPU limits to **1** and the CPU requests to **0.5**:
 
@@ -51,11 +55,15 @@ resources:
     memory: "4Mi"
 ```
 
-Save the above changes. Now, we must delete the existing StatefulSet and re-create it. StatefulSets are immutable, so we must delete the existing one and re-create it with the new changes.
+Save the changes youhave made. (Hint: Use `Esc` followed by `:wq!` to save your changes).
+
+Now, we must delete the existing StatefulSet and re-create it. StatefulSets are immutable, so we must delete the existing one and re-create it with the new changes.
 
 ``` bash
 kubectl delete statefulset php-apache -n apache
 ```
+
+Now, deploy your changes:
 
 ``` bash
 kubectl apply -f ~/workshop/k3s/php-apache.yaml -n apache
@@ -71,17 +79,19 @@ kubectl describe statefulset php-apache -n apache
 
 Validate the Pod is now running in Splunk Observability Cloud.
 
-{{% alert title="Workshop Question" color="success" %}}
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
 Is the **Apache Web Servers** dashboard showing any data now?
 
 **Tip:** Don't forget to use filters and time frames to narrow down your data.
 {{% /alert %}}
 
-{{% alert title="Workshop Question" color="success" %}}
+{{% alert title="Workshop Question" style="tip" icon="question" %}}
 Another Auto-Detect Detector has fired, which one is it this time?
 {{% /alert %}}
 
 ## 4. Fix memory issue
+
+Let's edit the stateful set and increase the memory to what is shown in the image below:
 
 ``` bash
 kubectl edit statefulset php-apache -n apache
@@ -96,6 +106,8 @@ resources:
     cpu: "0.5"
     memory: "12Mi"
 ```
+
+Save the changes youhave made. (Hint: Use `Esc` followed by `:wq!` to save your changes).
 
 Because the StatefulSet is immutable, we must delete the existing Pod and let the StatefulSet re-create it with the new changes.
 
